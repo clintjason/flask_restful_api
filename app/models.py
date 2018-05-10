@@ -1,6 +1,6 @@
 from marshmallow_jsonapi import Schema, fields
 from marshmallow import validate
-from flask.ext.sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()	# instantiate SQLAlchemy
 
@@ -42,7 +42,7 @@ class UsersSchema(Schema):
 
 	# self links
 	def get_top_level_links(self, data, many):
-		if many:	# ùany=True if the objact is a collection and false otherwise
+		if many:	# any=True if the objact is a collection and false otherwise
 			self_link = "/users/"	# self_url specifies the url to the resource
 		else:
 			self_link = "/users/{}".format(data['id'])
