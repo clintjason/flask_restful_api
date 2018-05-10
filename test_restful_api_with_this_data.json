@@ -1,0 +1,13 @@
+{
+	"data": {
+		"attributes": {
+			"name": "Leonard R Gonsalves",
+			"address" : "FlintStone Avenue Bedrock",
+			"age" : 26,
+			"profession" : "web developer",
+			"website" : "http://techarena51.com"
+		},
+
+		"type":"users"
+	}
+}

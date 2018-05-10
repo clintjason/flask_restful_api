@@ -34,11 +34,11 @@ class CreateListUsers(Resource):
 			# Should not return password hash
 			query = Users.query.get(user.id) # assigns user object with id 'user.id' to query
 			results = schema.dump(query).data	# serialize 'query' to a dictionary and returns it in 'results'
-			return results, 201	# 201 is the code for resource created.
+			return results, 201	# 201 means the request was completed successfully and as a result a new resource was created.
 
 		except ValidationError as err:
 			resp = jsonify({"error": err.messages})
-			resp.status_code = 403
+			resp.status_code = 403	#403 means forbidden
 			return resp
 
 		except SQLAlchemyError as e:
