@@ -17,7 +17,7 @@ api = Api(users)
 class CreateListUsers(Resource):
  
 	def get(self):
-		users_query = Users.query.all()	# returns a list of all Users 
+		users_query = Users.query.all()	# returns a list of all Users or an empty list
 		results = schema.dump(users_query, many=True).data
 		# schema.dump will serialize the list of Users into a dictionary: many is set to True coz users_query is a collection
 		return results
@@ -61,10 +61,10 @@ class GetUpdateDeleteUser(Resource):
 		try:
 			schema.validate(raw_dict)	# validate the inputs and returns a dictionary of validation errors accessible using ValidationError.messages
 			request_dict = raw_dict['data']['attributes']
-			for key, value in request_dict.items():
-				setattr(user, key, value)
+			for key, value in request_dict.iteritems():  #request_dict.items() returns a list of key-value tuple pairs e.g [('Age',24),('Name','Jesus')]
+				setattr(user, key, value)	# update key values in user
 				user.update()	# save new changes
-				return self.get(id)
+			return self.get(id)		#return the get method by id
 
 		except ValidationError as err:
 			resp = jsonify({"error": err.messages}) #jsonify() function in flask returns a flask.Response() object that already has the appropriate content-type header 'application/json' for use with json responses
@@ -78,7 +78,7 @@ class GetUpdateDeleteUser(Resource):
 			return resp
 
 	def delete(self, id):
-		user = Users.query.get_or_404(id)
+		user = Users.query.get_or_404(id)	# get user by id else return a 404 error
 
 		try:
 			delete = user.delete(user)
@@ -93,5 +93,5 @@ class GetUpdateDeleteUser(Resource):
 			return resp
 
 #Map classes to API enpoints
-api.add_resource(CreateListUsers, '.json')
-api.add_resource(GetUpdateDeleteUser, '/<int:id>.json')
+api.add_resource(CreateListUsers, '/')
+api.add_resource(GetUpdateDeleteUser, '/<int:id>')

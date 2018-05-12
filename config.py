@@ -1,7 +1,7 @@
 # MYSQL
-mysql_db_username = 'appuser'
-mysql_db_password = '1234'
-mysql_db_name = 'flask-angularjs-api'
+mysql_db_username = 'root'
+mysql_db_password = 'rootjason'
+mysql_db_name = 'flask_angularjs_api'
 mysql_db_hostname = 'localhost'
 SQLALCHEMY_TRACK_MODIFICATIONS = True
 

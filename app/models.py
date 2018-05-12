@@ -33,7 +33,7 @@ class Users(db.Model):
 class UsersSchema(Schema):
 	not_blank = validate.Length(min=1, error='Field cannot be blank')
 	# add validate=not_blank in required fields
-	id = fields.Integer(dump_only=True) 
+	id = fields.Integer(dump_only=True) 	# dump_only = True indicates that the field should be skipped during deserialization
 	name = fields.String(validate=not_blank)
 	address = fields.String(validate=not_blank)
 	age = fields.Integer(required=True)
@@ -41,12 +41,12 @@ class UsersSchema(Schema):
 	website = fields.String(validate=not_blank)
 
 	# self links
-	def get_top_level_links(self, data, many):
+	def get_top_level_links(self, data, many):	# method to get the top level links object in our response
 		if many:	# any=True if the objact is a collection and false otherwise
-			self_link = "/users/"	# self_url specifies the url to the resource
+			self_link = "/users"	# self_url specifies the url to the resource
 		else:
 			self_link = "/users/{}".format(data['id'])
-			return {'self': self_link}
+		return {'self': self_link}	# 
 		#The below type object is a resource identifier object as per http://jsonapi.org/format/#document-resource-identifier-objects
 	class Meta:
 		type_ = 'users'	# required 
